@@ -1,0 +1,381 @@
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+ ³                                                                          ³
+ ³         ßÛÛßßßÛÜßÛÛß    ÜÛßßßÛÜ ÛÛ  C O N V E R T E R  ver 5.3
+ ³          ÛÛ   ÛÛ ÛÛ     ÛÛ   ßß ÛÛÜÜÜÜ   ÜÜÜÜÜÜ ÜÜ ÜÜÜÜ  ÜÜÜÜÜ
+ ³          ÛÛ   ÛÛ ÛÛ     ÛÛ      ÛÛ   ÛÛ ÛÛ   ÛÛ  ÛÛ     ßÛÜÜ
+ ³          ÛÛßßßß  ÛÛ     ÛÛ   ÜÜ ÛÛ   ÛÛ ÛÛ   ÛÛ  ÛÛ        ßßÛÜ
+ ³         ÜÛÛÜ    ÜÛÛÜÜÜÛ ßÛÜÜÜÛß ÛÛ   ÛÛ ßÛÜÜßÛÛ ÜÛÛÜ     ÜÜÜÜÛß
+ ³
+ ³            F R E E Ä W A R E   F O R   F R E E   P E O P L E
+ ³
+ ³               written by Marcin Gryszkalis (c) 1997 - 1999
+ ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+     DESCRIPTION ³
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ ³
+ ³    PLC  is  file  converter  that  converts  ASCII  text  files  from/to
+ ³  different  standards  of coding polish diacritical chars. It support 34
+ ³  standards and can recognize standard of file (using two analysers).
+ ³
+ ÀÄÄÄÄÄÄÄ¿
+     TIP ³
+ ÚÄÄÄÄÄÄÄÙ
+ ³
+ ³    You   can  break  standard  analysis  with  ESC  key  (PLC  will  use
+ ³  information collected before break).
+ ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+     DISCLAIMER ³
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ ³
+ ³    Here goes usual disclaimer and other useless stuff... [skipped]
+ ³
+ ÀÄÄÄÄÄÄÄÄÄ¿
+     USAGE ³
+ ÚÄÄÄÄÄÄÄÄÄÙ
+ ³
+ ³  PLC filename.ext [code] [options]
+ ³
+ ³    ù  filename.ext - name of the source text file. You can use wildcards
+ ³  (like  *  and  ?)  to specify multiply files. You can specify full path
+ ³  (converted  file  will  be  saved  in  directory  where  source file is
+ ³  placed). If only filename is specified PLC will show standard of it.
+ ³    ù  code - three-letter code of destination polish chars standard, eg.
+ ³  MAZ for Mazovia or LAT for Latin-2.
+ ³
+ ³  options:
+ ³
+ ³    ù  /2 - use alternative method of recognizing standard.
+ ³    ù  /3  -  use  both  (normal  and alternative) methods of recognizing
+ ³  standard.
+ ³    ù  /S:code - force source standard, disable auto-recognizing
+ ³    ù  /A  -  (useless when no wildcards specified) recognize standard in
+ ³  first file ONLY and assume rest of files being the same standard.
+ ³    ù  /T:.. - name of target file, if not specified filename.PLC will be
+ ³  saved.  You  cannot  use  wildcards  in  /T parameter argument. You can
+ ³  specify full path and file or a path only (with ending '\').
+ ³    ù  /D - delete source file afterwards
+ ³    ù  /O - overwrite (rename destination file to source file afterwards)
+ ³    ù  /R  -  auto  replace (if target file exist already then it will be
+ ³  overwritten without asking - see the "surprise" section in this doc)
+ ³    ù  /Q - quiet mode (nothing is written to the screen)
+ ³    ù  /? - short help
+ ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄ¿
+     EXAMPLES ³
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ ³
+ ³  PLC a1.txt                     -- recognizes standard of a1 and shows
+ ³                                    results on screen, no convertion
+ ³                                    performed
+ ³  PLC C:\OLD\a1.txt /2           -- same as above but a1.txt is not in
+ ³                                    current subdirectory and alternative
+ ³                                    analyser is used
+ ³  PLC a1.txt ISO /3              -- recognizes standard of a1.txt (using
+ ³                                    both analyzers) and converts it to
+ ³                                    a1.plc as ISO-Latin2
+ ³  PLC a1.txt ISO /T:a2.txt /3    -- same as above but saves a2.txt
+ ³  PLC a1.txt ISO /T:a2.txt /D /3 -- same as above but saves a2.txt and
+ ³                                    erases a1.txt
+ ³  PLC a1.txt ISO /T:C:\NEW\      -- saves a1.plc in NEW subdirectory on C:
+ ³                                    drive
+ ³  PLC a1.txt ISO /O              -- converts a1.txt to a1.plc, erases a1.
+ ³                                    txt, renames a1.plc to a1.txt
+ ³  PLC a1.txt ISO /S:MAZ          -- doesn't perform recognition, assumes
+ ³                                    a1.txt being in Mazovia standard and
+ ³                                    converts to a1.plc in ISO-Latin2
+ ³  PLC *.txt ISO /A               -- recognizes standard of first file
+ ³                                    matching *.txt mask (for exmaple -
+ ³                                    Mazovia), convert it to ISO
+ ³                                    and convert all other files matching
+ ³                                    *.txt from Mazovia to ISO.
+ ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+     FOOL EXAMPLES ³
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ ³
+ ³  PLC a1.txt ISO /O /D          -- gives the same result as "DEL a1.txt"
+ ³                                   but takes more time and disk space ;)
+ ³  PLC a1.txt ISO /A             -- /A switch has nothing to do here
+ ³                                   (because PLC will work on 1 file only)
+ ³  PLC a1.txt ISO /T:a2.txt /O   -- works like /O only but uses s2.txt
+ ³                                   as a temporary file instead of default
+ ³                                   a1.plc
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+     STANDARDS ³
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ ³
+ ³    Following standards are accepted and supported:
+ ³
+ ³  01. BEZ - Bez polskich znakow
+ ³  02. ADB - Adobe Type Manager (old)
+ ³  03. AMI - AmigaPL
+ ³  04. ST  - Atari ST
+ ³  05. ST2 - Atari ST (z-z)
+ ³  06. COR - Corel 2.0
+ ³  07. CSK - Computer Studio Kajkowski
+ ³  08. CRD - Corel Draw (old)
+ ³  09. CFR - Cyfromat
+ ³  10. DHN - Dom Handlowy Nauki / ChiWriter pl
+ ³  11. EFT - Efekt
+ ³  12. ELW - Elwro Junior (CP/J) or Rodos
+ ³  13. FAT - Fat Agnus zine (amiga)
+ ³  14. HCT - Hector / Univex
+ ³  15. IEA - Instytut Energii Atomowej (IEA) Swierk
+ ³  16. IIN - IINTE-ISIS
+ ³  17. ISO - ISO 8859/2 Latin-2
+ ³  18. KWK - KWK Club
+ ³  19. LAT - Latin-2 (cp852)
+ ³  20. LOG - Logic
+ ³  21. WIN - MS Windows 3.x (cp1250)
+ ³  22. MAC - Macintosh v1
+ ³  23. MC2 - Macintosh v2
+ ³  24. MAZ - Mazovia (cp991)
+ ³  25. MFD - Mazovia - Fido net
+ ³  26. MIC - Microvex
+ ³  27. FOR - PC sp. Format
+ ³  28. PN3 - Polish Norm #3 (Polska Norma #3)
+ ³  29. SKL - Skalmierski
+ ³  30. TAG - TAG
+ ³  31. TEX - TeX.pl
+ ³  32. VNT - Ventura
+ ³  33. XJP - XJP Amiga
+ ³  34. XRD - XRD 2nd edition
+ ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    POSSIBLE ERRORLEVEL VALUES ³
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ ³
+ ³      0 - No error
+ ³
+ ³  PLC internal/user Errors:
+ ³
+ ³    241 - Wildcards used in destination filename (/T: switch)
+ ³    242 - Unknown standard code
+ ³    243 - Unknown standard code (/S: switch)
+ ³    244 - File not found (file search)
+ ³    245 - File not found (proceed)
+ ³
+ ³  Dos errors reported by PLC:
+ ³
+ ³      1 - Invalid function number
+ ³      2 - File not found
+ ³      3 - Path not found
+ ³      4 - Too many open files
+ ³      5 - File access denied
+ ³      6 - Invalid file handle
+ ³     12 - Invalid file access code
+ ³     15 - Invalid drive number
+ ³     16 - Cannot remove current directory
+ ³     17 - Cannot rename across drives
+ ³     18 - No more files
+ ³    100 - Disk read error
+ ³    101 - Disk write error
+ ³    102 - File not assigned
+ ³    103 - File not open
+ ³    104 - File not open for input
+ ³    105 - File not open for output
+ ³    106 - Invalid numeric format
+ ³    150 - Disk is write-protected
+ ³    151 - Bad drive request struct length
+ ³    152 - Drive not ready
+ ³    154 - CRC error in data
+ ³    156 - Disk seek error
+ ³    157 - Unknown media type
+ ³    158 - Sector Not Found
+ ³    159 - Printer out of paper
+ ³    160 - Device write fault
+ ³    161 - Device read fault
+ ³    162 - Hardware failure
+ ³    200 - Division by zero
+ ³    201 - Range check error
+ ³    202 - Stack overflow error
+ ³    203 - Heap overflow error
+ ³    204 - Invalid pointer operation
+ ³    205 - Floating point overflow
+ ³    206 - Floating point underflow
+ ³    207 - Invalid floating point operation
+ ³    208 - Overlay manager not installed
+ ³    209 - Overlay file read error
+ ³    210 - Object not initialized
+ ³    211 - Call to abstract method
+ ³    212 - Stream registration error
+ ³    213 - Collection index out of range
+ ³    214 - Collection overflow error
+ ³    215 - Arithmetic overflow error
+ ³    216 - General Protection fault
+ ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+     AUTO RECOGNIZING ³
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ ³
+ ³  1. First method (default)
+ ³
+ ³    This  method  of  auto recognizing is based on how frequently each of
+ ³  polish  diacritical  letters  can be found in typical text. I checked a
+ ³  huge  set  of  different kinds of documents in Polish (18 megabytes) to
+ ³  obtain  the  best  factors used in auto-recognition module, although it
+ ³  may  fail  when trying to process a file containing frame-work or ASCII
+ ³  graphics.  In  such  a  case  you should use /S switch to choose source
+ ³  standard. I have an idea to make it a bit better but now it's dea only.
+ ³
+ ³  2. Alternative method (option '/2')
+ ³
+ ³    This method checks every char in a file and if it doesn't exist among
+ ³  letters  in a standard - the standard gets some 'fail points'. Standard
+ ³  with the smallest number of 'fail points' is probably standard of file.
+ ³  This  method  fails  on  docs with framework but can help in particular
+ ³  cases  (when  whole  file  is  written in uppercase for example). Other
+ ³  thing  is  that  for  this  algorithm there's no difference between two
+ ³  standards  of  the  same  charset  in different order (like Mazowia and
+ ³  Mazowia FIDO).
+ ³
+ ³    Note  that  you  can  use  both methods with '/3' option. Result is a
+ ³  simple average of 1st and 2nd method results.
+ ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+     BENCHMARK ³
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ ³
+ ³    On  my  Amd  K5  100  MHz  it  takes 02:15 (more than two minutes) to
+ ³  convert  18  magabytes  long  file (from hard disk to nul device) using
+ ³  both  standard  analysers  (/3  option).  Converting the same file with
+ ³  source standard specified (/S: option) takes about 5 seconds - actually
+ ³  it is FASTER than "copy file.txt nul". Pretty good, huh?
+ ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄ¿
+     SURPRISE ³
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ ³
+ ³    Sometimes you may get a message :
+ ³  FILE.EXT exist. [O]verwrite [S]kip [R]ename [Q]uit
+ ³    O - overwrite existing file with new one
+ ³    S - don't try to convert the file
+ ³    Q - quit immediately
+ ³    R - choose a name for EXISTING file, NOT for file that will be saved.
+ ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄ¿
+     HISTORY ³
+ ÚÄÄÄÄÄÄÄÄÄÄÄÙ
+ ³
+ ³  1.0 Ä First Release, 8 standards
+ ³  1.1 Ä Auto-recognizing, /O and /D switches added
+ ³  1.3 Ä Bugfixed, 14 standards
+ ³  1.5 Ä Bugfixed, 18 standards [no release]
+ ³  2.0 Ä New command line (easier/faster to use), 26 standards
+ ³  3.0 Ä Auto-recognizing improved, 29 standards
+ ³  3.1 - 30th standard added [no release]
+ ³  3.5 Ä Wildcards support added, /S switch added
+ ³  3.6 - Minor bug fixed, minor display change, 31 standards
+ ³  3.7 - /A switch added, /T: switch bug fixed, 32 standards
+ ³  3.8 - fixed bug added in 3.7 :), fixed this text, 33 standards
+ ³  3.9 - fixed another bug (sorry...), auto-recognizing proofed
+ ³  4.0 - Percentage show fixed, auto-recognizing proofed again
+ ³  4.1 - Small fixes, extended proofing used [no release]
+ ³  4.2 - "I'm alive" indicator fixed to time dependent [no release]
+ ³  4.3 - 34th standard added [no release]
+ ³  4.4 - Some floating point code fixed [no release]
+ ³  4.5 - Some memory optimizations [no release]
+ ³  5.0 - Alternative method of recognizing implemented (/2 and /3)
+ ³  5.1 - Code fixed to overleap Borland's CRT bug [no release]
+ ³  5.2 - Converting speed up (using xlation tables) [no release]
+ ³  5.3 - /R and /Q switches added, documentation extended
+ ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄ¿
+     PROBLEMS ³
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ ³
+ ³    Known problems you may have using PLC:
+ ³
+ ³    ù  When  using  wildcards  no  more than 5041 files will be converted
+ ³  (this  is because names of files are stored in an array of size limited
+ ³  to  64K).  In most cases those 5041 should be enough but if not you can
+ ³  always use DOS' "for" command (I'm not really sure if it'd help...)
+ ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+     FUTURE PLANS ³
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ ³
+ ³    ù Rewrite whole PLC into c++ (watcom/gcc)
+ ³    ù Third version of standard analyser (I have one pretty good idea but
+ ³  it's really sophisticated...)
+ ³    ù Unix/linux/vms/aix port
+ ³    ù Unknown standard converter (with this thingy PLC will convert file
+ ³  in a standard that doesn't match any of known standards)
+ ³    ù windoze port (?)
+ ³    ù source code release (?)
+ ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+     BLA, BLA, BLA... ³
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ ³
+ ³    Feel  free  to  ask  me  any  questions.  Wishes  and bug-reports are
+ ³  welcome. You can use email (dagoon@friko2.onet.pl) or meet me (nickname
+ ³  "dagoon")  on  #PolishScene  or  #Trax  (EFNet iRC). I need info on not
+ ³  supported standards (more, more, MORE!!! ;)
+ ³
+ ³    I'd like to thank following people for their support and help
+ ³    ù Pawel "KrawietZ" Krawczyk - author of ConvPL
+ ³    ù Maciej Haudek - author of Witaj (standards info)
+ ³    ù Artur Pietruk (docs)
+ ³    ù Artur Olech (Borland's CRT bug information & additional advices)
+ ³
+ ³    You  can  find  latest  version of PLC in SAC archive or in Cryogen's
+ ³  distro sites (see cryogen.nfo)
+ ³
+ ³    If  you  want some theory on standards converting and recognizing (in
+ ³  polish) - try these articles:
+ ³    ù Wladyslaw Majewski "Z komputerem po polsku", Komputer 10/87
+ ³    ù Marcin Borkowski "Polskie litery", Bajtek 2/91
+ ³    ù Grzegorz Eider "Nieco porzadku", Enter 9/91
+ ³    ù Stanislaw  Weslawski  "Problemy rozpoznawania i konwersji polskich
+ ³  znakow", Magazyn Amiga 1/97
+ ³
+ ³    Lot  of  stuff  for  all  hardware platforms and systems available at
+ ³  http://sunsite.icm.edu.pl/ogonki
+ ³
+ ÀÄÄÄÄÄÄÄ¿
+     TIP ³
+ ÚÄÄÄÄÄÄÄÙ
+ ³
+ ³    To get polish version of M$ Windows type: "PLC win.com WIN /O"
+ ³
+ ÀÄÄÄÄÄÄÄ¿
+     SAC ³
+ ÚÄÄÄÄÄÄÄÙ
+ ³
+ ³    You  can download latest versions of PLC (and other utilities made by
+ ³  me)  from  Slovak  Antivirus  Center  FTP  sites  (PLC is in /UTILTEXT/
+ ³  subdirectory). Here is complete list of SAC mirrors:
+ ³
+ ³    Poland          ftp.pwr.wroc.pl/pub/pc/sac
+ ³    Czech Republic  ftp.vse.cz/pub/mirror/ftp.elf.stuba.sk/pc
+ ³    Germany         ftp.cs.tu-berlin.de/pub/msdos/mirrors/stuba/pc
+ ³    Hungary         ftp.bke.hu/pub/mirrors/sac
+ ³    Italy           cert.unisa.it/pub/PC/SAC
+ ³    Italy           ftp2.itb.it/pub/PC/SAC
+ ³    Slovakia        ftp.netlab.sk/pub/sac
+ ³    Slovakia        ftp.sac.sk/pub/sac
+ ³    Slovakia        ftp.gratex.sk/sac
+ ³    Slovakia        ftp.uakom.sk/pub/mirrors/sac
+ ³    Taiwan          ftp.nsysu.edu.tw/PC/SAC
+ ³    U.S.A.          ftp.cdrom.com/pub/sac
+ ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄ¿
+     CONTACT ³
+ ÚÄÄÄÄÄÄÄÄÄÄÄÙ
+ ³
+ ³  Marcin Gryszkalis aka Dagoon of Cryogen
+ ³  ul.xxxxxxxxxxxxx xx m.xx
+ ³  xx-xxx Lodz
+ ³  Poland
+ ³
+ ³  email: dagoon@rs.math.uni.lodz.pl
+ ³
+ ³  phone: (0-48-42) xxx-xx-xx (CET)
+ ³
+ ³  WWW: http://rs.math.uni.lodz.pl/~dagoon
+ ³                                                                          ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
